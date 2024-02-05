@@ -117,6 +117,9 @@ const Formulario = ({ agregarCita }) => {
                 value={cita.sintomas}
                 onChange={handleInputChange}
                 placeholder="Describir sintomas"
+                required
+                minLength={3}
+                maxLength={500}
                 />
             </div>
           
