@@ -17,10 +17,9 @@ const Formulario = ({ agregarCita }) => {
       };
       const handleSubmit = (e) => {
         e.preventDefault();
-        // Validar que todos los campos estén completos
+        
         if (Object.values(cita).every((value) => value.trim() !== '')) {
           agregarCita(cita);
-          // Limpiar el formulario
           setCita({
             nombre: '',
             mascota: '',
@@ -31,6 +30,17 @@ const Formulario = ({ agregarCita }) => {
         } else {
           alert('Complete todos los campos antes de enviar la cita.');
         }
+      };
+      const agregarCeroAdelante = (valor) => {
+        return valor < 10 ? `0${valor}` : valor;
+      };
+      const obtenerFechaActual = () => {
+        const fechaActual = new Date();
+        const formatoFecha = `${fechaActual.getFullYear()}-${agregarCeroAdelante(
+          fechaActual.getMonth() + 1
+        )}-${agregarCeroAdelante(fechaActual.getDate())}`;
+    
+        return formatoFecha;
       };
 
 
@@ -47,6 +57,9 @@ const Formulario = ({ agregarCita }) => {
                 value={cita.mascota}
                 onChange={handleInputChange}
                 placeholder="Nombre de la mascota"
+                required
+                maxLength={50}
+                minLength={1}
                 />
             </div>
           
@@ -60,6 +73,9 @@ const Formulario = ({ agregarCita }) => {
                 value={cita.nombre}
                 onChange={handleInputChange}
                 placeholder="Nombre del dueño"
+                required
+                maxLength={50}
+                minLength={2}
                 />
             </div>
         </Form.Group>
@@ -73,6 +89,8 @@ const Formulario = ({ agregarCita }) => {
                         name="fecha"
                         value={cita.fecha}
                         onChange={handleInputChange}
+                        required
+                        min={obtenerFechaActual()}
                     />
                 </Form.Group>
             </Col>
@@ -85,6 +103,7 @@ const Formulario = ({ agregarCita }) => {
                     name="hora"
                     value={cita.hora}
                     onChange={handleInputChange}
+                    required
                 />
                 </Form.Group>
             </Col>  
